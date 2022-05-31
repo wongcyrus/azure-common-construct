@@ -9,6 +9,10 @@
   "main": "src/main.js",
   "types": "src/main.ts",
   "license": "MPL-2.0",
+  "keywords": [
+    "cdk-tf",
+    "azure"
+  ],
   "scripts": {
     "get": "cdktf get",
     "build": "tsc",
