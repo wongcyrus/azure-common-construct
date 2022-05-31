@@ -1,0 +1,226 @@
+{
+  "author": {
+    "name": "Cyrus Wong",
+    "roles": [
+      "author"
+    ]
+  },
+  "dependencies": {
+    "@cdktf/provider-archive": "^0.5.7",
+    "@cdktf/provider-azurerm": "^0.7.7",
+    "@cdktf/provider-external": "^0.6.7",
+    "@cdktf/provider-null": "^0.7.7",
+    "@cdktf/provider-random": "^0.3.7",
+    "cdktf": "^0.11.0",
+    "constructs": "^10.1.22"
+  },
+  "dependencyClosure": {
+    "@cdktf/provider-archive": {
+      "targets": {
+        "dotnet": {
+          "namespace": "HashiCorp.Cdktf.Providers.Archive",
+          "packageId": "HashiCorp.Cdktf.Providers.Archive"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "cdktf-provider-archive",
+            "groupId": "com.hashicorp"
+          },
+          "package": "com.hashicorp.cdktf.providers.archive"
+        },
+        "js": {
+          "npm": "@cdktf/provider-archive"
+        },
+        "python": {
+          "distName": "cdktf-cdktf-provider-archive",
+          "module": "cdktf_cdktf_provider_archive"
+        }
+      }
+    },
+    "@cdktf/provider-azurerm": {
+      "targets": {
+        "dotnet": {
+          "namespace": "HashiCorp.Cdktf.Providers.Azurerm",
+          "packageId": "HashiCorp.Cdktf.Providers.Azurerm"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "cdktf-provider-azurerm",
+            "groupId": "com.hashicorp"
+          },
+          "package": "com.hashicorp.cdktf.providers.azurerm"
+        },
+        "js": {
+          "npm": "@cdktf/provider-azurerm"
+        },
+        "python": {
+          "distName": "cdktf-cdktf-provider-azurerm",
+          "module": "cdktf_cdktf_provider_azurerm"
+        }
+      }
+    },
+    "@cdktf/provider-external": {
+      "targets": {
+        "dotnet": {
+          "namespace": "HashiCorp.Cdktf.Providers.External",
+          "packageId": "HashiCorp.Cdktf.Providers.External"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "cdktf-provider-external",
+            "groupId": "com.hashicorp"
+          },
+          "package": "com.hashicorp.cdktf.providers.external"
+        },
+        "js": {
+          "npm": "@cdktf/provider-external"
+        },
+        "python": {
+          "distName": "cdktf-cdktf-provider-external",
+          "module": "cdktf_cdktf_provider_external"
+        }
+      }
+    },
+    "@cdktf/provider-null": {
+      "targets": {
+        "dotnet": {
+          "namespace": "HashiCorp.Cdktf.Providers.Null",
+          "packageId": "HashiCorp.Cdktf.Providers.Null"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "cdktf-provider-null",
+            "groupId": "com.hashicorp"
+          },
+          "package": "com.hashicorp.cdktf.providers.null_provider"
+        },
+        "js": {
+          "npm": "@cdktf/provider-null"
+        },
+        "python": {
+          "distName": "cdktf-cdktf-provider-null",
+          "module": "cdktf_cdktf_provider_null"
+        }
+      }
+    },
+    "@cdktf/provider-random": {
+      "targets": {
+        "dotnet": {
+          "namespace": "HashiCorp.Cdktf.Providers.Random",
+          "packageId": "HashiCorp.Cdktf.Providers.Random"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "cdktf-provider-random",
+            "groupId": "com.hashicorp"
+          },
+          "package": "com.hashicorp.cdktf.providers.random_provider"
+        },
+        "js": {
+          "npm": "@cdktf/provider-random"
+        },
+        "python": {
+          "distName": "cdktf-cdktf-provider-random",
+          "module": "cdktf_cdktf_provider_random"
+        }
+      }
+    },
+    "cdktf": {
+      "submodules": {
+        "cdktf.testingMatchers": {}
+      },
+      "targets": {
+        "dotnet": {
+          "namespace": "HashiCorp.Cdktf",
+          "packageId": "HashiCorp.Cdktf"
+        },
+        "go": {
+          "moduleName": "github.com/hashicorp/terraform-cdk-go",
+          "packageName": "cdktf"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "cdktf",
+            "groupId": "com.hashicorp"
+          },
+          "package": "com.hashicorp.cdktf"
+        },
+        "js": {
+          "npm": "cdktf"
+        },
+        "python": {
+          "distName": "cdktf",
+          "module": "cdktf"
+        }
+      }
+    },
+    "constructs": {
+      "targets": {
+        "dotnet": {
+          "namespace": "Constructs",
+          "packageId": "Constructs"
+        },
+        "go": {
+          "moduleName": "github.com/aws/constructs-go"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "constructs",
+            "groupId": "software.constructs"
+          },
+          "package": "software.constructs"
+        },
+        "js": {
+          "npm": "constructs"
+        },
+        "python": {
+          "distName": "constructs",
+          "module": "constructs"
+        }
+      }
+    }
+  },
+  "description": "infrastructure",
+  "homepage": "https://github.com/wongcyrus/AzureLabPowerStripController",
+  "jsiiVersion": "1.59.0 (build eb02c92)",
+  "license": "MPL-2.0",
+  "metadata": {
+    "jsii": {
+      "pacmak": {
+        "hasDefaultInterfaces": true
+      }
+    }
+  },
+  "name": "infrastructure",
+  "readme": {
+    "markdown": "# Development Setup Overview\n1. Install chocolatey.\n2. Using chocolatey install Terraform\n3. Using chocolatey install node.js\n5. Using chocolatey install jq\n5. Install yarn\n6. Install npx\n7. Install cdktf ```npm run upgrade``` and ```npm i -g cdktf@latest cdktf-cli@latest```\n8. Install Az.IotHub with administration Powershell ```Install-Module -Name Az.IotHub -Force -AllowClobber```\n9. Run ```Connect-AzAccount```\n\n# Deploy\nOpen the first terminal, and run ```npm run watch``` to complie TypeScript.\n\nOpen the second terminal,\n1. Run ```cdkth get```\n2. Run ```cdktf deploy --auto-approve```\n\n\nGet output\n```cdktf output```\n\nSave output to json\n```cdktf output --outputs-file-include-sensitive-outputs --outputs-file secrets.json```\n\n\n"
+  },
+  "repository": {
+    "type": "local",
+    "url": "https://github.com/wongcyrus/AzureLabPowerStripController"
+  },
+  "schema": "jsii/0.10.0",
+  "targets": {
+    "dotnet": {
+      "namespace": "AzureCloudLab.Jsii",
+      "packageId": "AzureCloudLab.Jsii"
+    },
+    "java": {
+      "maven": {
+        "artifactId": "jsii-azure-cloud-lab",
+        "groupId": "com.cloudlabhk.azurecloudlab.jsii"
+      },
+      "package": "com.cloudlabhk.azurecloudlab.jsii"
+    },
+    "js": {
+      "npm": "infrastructure"
+    },
+    "python": {
+      "distName": "azure-cloud-lab",
+      "module": "azure-cloud-lab.base"
+    }
+  },
+  "types": {},
+  "version": "1.0.0",
+  "fingerprint": "N8GVveG51AmX9n1W5+FjroYFmplbNc0yebYvn+csCOg="
+}
