@@ -1,7 +1,7 @@
 {
   "name": "azure-common-construct",
   "author": "Cyrus Wong",
-  "version": "0.0.3",
+  "version": "0.0.9",
   "repository": {
     "url": "https://github.com/wongcyrus/AzureConstructLib",
     "type": "remote"
@@ -48,8 +48,7 @@
   },
   "jsii": {
     "excludeTypescript": [
-      "*.d.ts",
-      ".gen",
+      "*.d.ts",     
       "cdktf.out"
     ],
     "outdir": "dist",

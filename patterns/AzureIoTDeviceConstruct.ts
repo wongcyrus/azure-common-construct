@@ -1,5 +1,5 @@
 import { Construct } from 'constructs'
-import { Iothub, ResourceGroup, } from "../.gen/providers/azurerm"
+import { Iothub, ResourceGroup } from "../.gen/providers/azurerm"
 import { DataExternal } from "../.gen/providers/external";
 import path = require('path');
 
@@ -20,7 +20,7 @@ export class AzureIotDeviceConstruct extends Construct {
         config: AzureIoTDeviceConfig
     ) {
         super(scope, name)
-        
+
         const psScriptPath = path.join(__dirname, "GetDeviceKey.ps1");
         const deviceKeyExternal = new DataExternal(this, "DeviceKeyExternal", {
             program: ["PowerShell", psScriptPath],
@@ -30,7 +30,7 @@ export class AzureIotDeviceConstruct extends Construct {
                 iotHubName: config.iothub.name
             }
         })
-        this.deviceKey = deviceKeyExternal.result.lookup("deviceKey")      
+        this.deviceKey = deviceKeyExternal.result.lookup("deviceKey")
 
     }
 }

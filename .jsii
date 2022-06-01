@@ -82,7 +82,7 @@
   },
   "name": "azure-common-construct",
   "readme": {
-    "markdown": "# azure-common-construct\n\nThis package is a Typescript package for some common Azure L3 CDK-TF patterns.\n1. AzureFunctionLinuxConstruct - C# Azure function in Linux.\n2. AzureIotConstruct - Azure IoTHub and return primary connection string.\n3. AzureIotEventHubConstruct - Child class of AzureIotConstruct, added Event hub sink and return EventHub primary connection string.\n4. AzureIotDeviceConstruct - Create Azure IoT Device and return device key.\n\n\n"
+    "markdown": "# azure-common-construct\n\nThis package is a Typescript package for some common Azure L3 CDK-TF patterns.\n1. AzureFunctionLinuxConstruct - C# Azure function in Linux.\n2. AzureIotConstruct - Azure IoTHub and return primary connection string.\n3. AzureIotEventHubConstruct - Child class of AzureIotConstruct, added Event hub sink and return EventHub primary connection string.\n4. AzureIotDeviceConstruct - Create Azure IoT Device and return device key.\n\n\nThis package includes:\n1. \"azurerm@~> 3.7.0\"\n2. \"azuread@~>2.22.0\"\n3. \"random@~>3.2.0\"\n4. \"null@~>3.1.1\"\n5. \"external@~>2.2.2\"\n6. \"archive@~>2.2.0\"\n7. \"http@~>2.1.0\"\n\n\n"
   },
   "repository": {
     "type": "remote",
@@ -110,6 +110,6 @@
     }
   },
   "types": {},
-  "version": "0.0.3",
-  "fingerprint": "DkSkY5dPyzbMh6zJ8sBWm6UdoP0QDKnZxNfun5lrjuo="
+  "version": "0.0.6",
+  "fingerprint": "bS7XKiKSgkkCvheuswBd/jC7Id7T6sXHNCZSv7a6TKw="
 }
