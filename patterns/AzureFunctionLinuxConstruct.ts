@@ -89,7 +89,7 @@ export class AzureFunctionLinuxConstruct extends Construct {
 
         if (config.publishMode !== PublishMode.Manual) {
             const vsProjectPath = config.vsProjectPath;
-            const build_hash = config.publishMode == PublishMode.Always ? "${timestamp()}" : `sha1(join("", [for f in fileset("${vsProjectPath}", "**.cs"): filesha1(f)]))`;
+            const build_hash = config.publishMode == PublishMode.Always ? "${timestamp()}" : `sha1(join("", [for f in fileset("${vsProjectPath}", "**/*.cs"): filesha1(f)]))`;
 
             const buildFunctionAppResource = new Resource(this, "BuildFunctionAppResource",
                 {

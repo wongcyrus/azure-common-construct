@@ -1,7 +1,8 @@
 {
   "name": "azure-common-construct",
   "author": "Cyrus Wong",
-  "version": "0.0.12",
+  "version": "0.0.15",
+  "files": [ ".gen", "patterns" ],
   "repository": {
     "url": "https://github.com/wongcyrus/AzureConstructLib",
     "type": "remote"
