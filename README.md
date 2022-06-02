@@ -17,4 +17,9 @@ This package includes:
 6. "archive@~>2.2.0"
 7. "http@~>2.1.0"
 
+Some of the functions are using powershell to invoke Azure cli,
+You need to install Azure cli 
+1. Login AZ cli, but you should always complete this for Terraform.
+2. set ```az config set extension.use_dynamic_install=yes_without_prompt```.
+
 

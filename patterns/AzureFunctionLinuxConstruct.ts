@@ -5,13 +5,19 @@ import { ResourceGroup, ApplicationInsights, ServicePlan, LinuxFunctionApp, Stor
 import { Resource } from "../.gen/providers/null"
 import { DataArchiveFile } from "../.gen/providers/archive"
 
+export enum PublishMode {
+    Always = 1,
+    AfterCodeChange,
+    Manual
+}
 export interface AzureFunctionLinuxConstructConfig {
     readonly prefix: string
     readonly environment: string
     readonly resourceGroup: ResourceGroup
     readonly appSettings: { [key: string]: string }
-    readonly vsProjectPath: string    
+    readonly vsProjectPath: string
     readonly skuName?: string
+    readonly publishMode: PublishMode
 }
 
 export class AzureFunctionLinuxConstruct extends Construct {
@@ -79,45 +85,48 @@ export class AzureFunctionLinuxConstruct extends Construct {
             }
         })
 
-        const buildFunctionAppResource = new Resource(this, "BuildFunctionAppResource",
-            {
-                triggers: { build_number: "${timestamp()}" },
-                dependsOn: [this.functionApp]
+
+
+        if (config.publishMode !== PublishMode.Manual) {
+            const vsProjectPath = config.vsProjectPath;
+            const build_hash = config.publishMode == PublishMode.Always ? "${timestamp()}" : `sha1(join("", [for f in fileset("${vsProjectPath}", "**.cs"): filesha1(f)]))`;
+
+            const buildFunctionAppResource = new Resource(this, "BuildFunctionAppResource",
+                {
+                    triggers: { build_hash: build_hash },
+                    dependsOn: [this.functionApp]
+                })
+
+            buildFunctionAppResource.addOverride("provisioner", [
+                {
+                    "local-exec": {
+                        working_dir: vsProjectPath,
+                        command: "dotnet publish -p:PublishProfile=FolderProfile"
+                    },
+                },
+            ]);
+            const publishPath = path.join(vsProjectPath, "/bin/Release/net6.0/publish");
+            const outputZip = path.join(publishPath, "../deployment.zip")
+            const dataArchiveFile = new DataArchiveFile(this, "DataArchiveFile", {
+                type: "zip",
+                sourceDir: publishPath,
+                outputPath: outputZip,
+                dependsOn: [buildFunctionAppResource]
             })
 
-        const vsProjectPath = config.vsProjectPath;
-        buildFunctionAppResource.addOverride("provisioner", [
-            {
-                "local-exec": {
-                    working_dir: vsProjectPath,
-                    command: "dotnet publish -p:PublishProfile=FolderProfile"
+            const publishFunctionAppResource = new Resource(this, "PublishFunctionAppResource",
+                {
+                    triggers: { build_hash: build_hash },
+                    dependsOn: [dataArchiveFile]
+                })
+
+            publishFunctionAppResource.addOverride("provisioner", [
+                {
+                    "local-exec": {
+                        command: `az functionapp deployment source config-zip --resource-group ${config.resourceGroup.name} --name ${this.functionApp.name} --src ${dataArchiveFile.outputPath}`
+                    },
                 },
-            },
-        ]);
-        const publishPath = path.join(vsProjectPath, "/bin/Release/net6.0/publish");
-        const outputZip = path.join(publishPath, "../deployment.zip")
-        const dataArchiveFile = new DataArchiveFile(this, "DataArchiveFile", {
-            type: "zip",
-            sourceDir: publishPath,
-            outputPath: outputZip,
-            dependsOn: [buildFunctionAppResource]
-        })
-
-        const publishFunctionAppResource = new Resource(this, "PublishFunctionAppResource",
-            {
-                triggers: { build_number: "${timestamp()}" },
-                dependsOn: [dataArchiveFile]
-            })
-
-        publishFunctionAppResource.addOverride("provisioner", [
-            {
-                "local-exec": {
-                    command: `az functionapp deployment source config-zip --resource-group ${config.resourceGroup.name} --name ${this.functionApp.name} --src ${dataArchiveFile.outputPath}`
-                },
-            },
-        ]);
-
-
-
+            ]);
+        }
     }
 }
