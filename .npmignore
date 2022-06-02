@@ -13,7 +13,7 @@ dist
 # Include .jsii
 !.jsii
 
-!.gen/*
+!.gen/**/*
 cdktf.out/*
 key.json
 secrets.json
