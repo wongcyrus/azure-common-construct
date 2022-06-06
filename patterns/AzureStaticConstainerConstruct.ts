@@ -1,7 +1,7 @@
 import { Construct } from 'constructs'
-import { ResourceGroup, ContainerRegistry, ContainerRegistryTask } from "../.gen/providers/azurerm"
-import { DataHttp } from "../.gen/providers/http"
-import { Resource } from "../.gen/providers/null"
+import { ResourceGroup, ContainerRegistry, ContainerRegistryTask } from "cdktf-azure-providers/.gen/providers/azurerm"
+import { DataHttp } from "cdktf-azure-providers/.gen/providers/http"
+import { Resource } from "cdktf-azure-providers/.gen/providers/null"
 
 
 export interface AzureStaticConstainerConfig {

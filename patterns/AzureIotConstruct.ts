@@ -1,5 +1,5 @@
 import { Construct } from 'constructs'
-import {  Iothub, ResourceGroup, IothubSharedAccessPolicyA } from "../.gen/providers/azurerm"
+import {  Iothub, ResourceGroup, IothubSharedAccessPolicyA } from "cdktf-azure-providers/.gen/providers/azurerm"
 
 
 export interface AzureIoTConfig {

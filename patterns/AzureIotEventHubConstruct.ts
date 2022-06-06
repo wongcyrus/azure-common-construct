@@ -1,6 +1,6 @@
 import { Construct } from 'constructs'
-import { Eventhub, EventhubNamespace, EventhubAuthorizationRule, IothubEndpointEventhub, IothubRouteA, IothubEnrichmentA } from "../.gen/providers/azurerm"
-import { StringResource } from '../.gen/providers/random'
+import { Eventhub, EventhubNamespace, EventhubAuthorizationRule, IothubEndpointEventhub, IothubRouteA, IothubEnrichmentA } from "cdktf-azure-providers/.gen/providers/azurerm"
+import { StringResource } from 'cdktf-azure-providers/.gen/providers/random'
 import { AzureIoTConfig, AzureIotConstruct } from './AzureIotConstruct'
 
 export interface AzureEventHubIoTConfig extends AzureIoTConfig {
