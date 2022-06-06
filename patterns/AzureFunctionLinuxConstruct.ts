@@ -4,6 +4,10 @@ import path = require('path')
 import { ResourceGroup, ApplicationInsights, ServicePlan, LinuxFunctionApp, StorageAccount } from "../.gen/providers/azurerm"
 import { Resource } from "../.gen/providers/null"
 import { DataArchiveFile } from "../.gen/providers/archive"
+import { getAllFilesSync } from 'get-all-files'
+import sha256File = require('sha256-file')
+import * as sha256 from "fast-sha256";
+import { TextDecoder, TextEncoder } from 'util'
 
 export enum PublishMode {
     Always = 1,
@@ -89,7 +93,13 @@ export class AzureFunctionLinuxConstruct extends Construct {
 
         if (config.publishMode !== PublishMode.Manual) {
             const vsProjectPath = config.vsProjectPath;
-            const build_hash = config.publishMode == PublishMode.Always ? "${timestamp()}" : `sha1(join("", [for f in fileset("${vsProjectPath}", "**/*.cs"): filesha1(f)]))`;
+            
+            let build_hash = "${timestamp()}";
+            if(config.publishMode == PublishMode.AfterCodeChange){
+                const textEncoder = new TextEncoder(); 
+                const textDecoder = new TextDecoder("utf-8");
+                build_hash = textDecoder.decode(sha256.hash(textEncoder.encode(getAllFilesSync(vsProjectPath).toArray().filter(c=>c.endsWith(".cs")).map(f=>sha256File(f)).join())));
+            }          
 
             const buildFunctionAppResource = new Resource(this, "BuildFunctionAppResource",
                 {
