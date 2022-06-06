@@ -1,7 +1,7 @@
 import { Construct } from 'constructs'
 import { Iothub, ResourceGroup } from "cdktf-azure-providers/.gen/providers/azurerm"
 import { DataExternal } from "cdktf-azure-providers/.gen/providers/external";
-import path = require('path');
+import *  as path from 'path';
 
 export interface AzureIoTDeviceConfig {
     readonly deviceId: string

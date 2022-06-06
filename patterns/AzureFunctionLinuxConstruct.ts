@@ -1,11 +1,11 @@
 import { StringResource } from 'cdktf-azure-providers/.gen/providers/random'
 import { Construct } from 'constructs'
-import path = require('path')
+import *  as path from 'path';
 import { ResourceGroup, ApplicationInsights, ServicePlan, LinuxFunctionApp, StorageAccount } from "cdktf-azure-providers/.gen/providers/azurerm"
 import { Resource } from "cdktf-azure-providers/.gen/providers/null"
 import { DataArchiveFile } from "cdktf-azure-providers/.gen/providers/archive"
 import { getAllFilesSync } from 'get-all-files'
-import sha256File = require('sha256-file')
+import * as sha256File from 'sha256-file';
 import * as sha256 from "fast-sha256";
 import { TextDecoder, TextEncoder } from 'util'
 
