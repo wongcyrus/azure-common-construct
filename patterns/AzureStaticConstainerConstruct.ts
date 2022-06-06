@@ -12,6 +12,7 @@ export interface AzureStaticConstainerConfig {
     readonly gitHubRepo: string
     readonly branch?: string
     readonly gitAccessToken: string
+    readonly dockerBuildArguments?: { [key: string]: string }
 }
 
 export class AzureStaticConstainerConstruct extends Construct {
@@ -44,6 +45,9 @@ export class AzureStaticConstainerConstruct extends Construct {
                 imageNames: [config.gitHubRepo + ":latest"]
             }
         })
+
+        if(config.dockerBuildArguments)
+            containerRegistryTask.dockerStep.arguments = config.dockerBuildArguments!
 
         const dockerFile = new DataHttp(this, "DataHttp", {
             url: `https://raw.githubusercontent.com/${config.gitHubUserName}/${config.gitHubRepo}/${branch}/Dockerfile`
