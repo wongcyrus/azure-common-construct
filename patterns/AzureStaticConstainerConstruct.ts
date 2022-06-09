@@ -53,7 +53,7 @@ export class AzureStaticConstainerConstruct extends Construct {
         })
 
         const nullResource = new Resource(this, "NullResource", {
-            triggers: { repoZipFile: repoHash.responseBody },
+            triggers: { repoHash: repoHash.responseBody },
             dependsOn: [containerRegistryTask]
         })
         nullResource.addOverride("provisioner.local-exec.command",
