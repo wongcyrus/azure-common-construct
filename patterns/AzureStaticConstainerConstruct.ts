@@ -48,13 +48,12 @@ export class AzureStaticConstainerConstruct extends Construct {
 
         if(config.dockerBuildArguments)
             containerRegistryTask.dockerStep.arguments = config.dockerBuildArguments!
-
-        const repoZipFile = new DataHttp(this, "DataHttp", {
-            url: `https://github.com/${config.gitHubUserName}/${config.gitHubRepo}/archive/refs/heads/${branch}.zip`
+        const repoHash = new DataHttp(this, "DataHttp", {
+            url: `https://api.github.com/repos/${config.gitHubUserName}/${config.gitHubRepo}/git/refs/heads/${branch}`
         })
 
         const nullResource = new Resource(this, "NullResource", {
-            triggers: { repoZipFile: repoZipFile.responseBody },
+            triggers: { repoZipFile: repoHash.responseBody },
             dependsOn: [containerRegistryTask]
         })
         nullResource.addOverride("provisioner.local-exec.command",
