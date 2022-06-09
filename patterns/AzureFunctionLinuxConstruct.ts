@@ -15,6 +15,7 @@ export enum PublishMode {
     Manual
 }
 export interface AzureFunctionLinuxConstructConfig {
+    readonly functionAppName?: string
     readonly prefix: string
     readonly environment: string
     readonly resourceGroup: ResourceGroup
@@ -73,7 +74,7 @@ export class AzureFunctionLinuxConstruct extends Construct {
         appSettings['Environment'] = config.environment
 
         this.functionApp = new LinuxFunctionApp(this, "FunctionApp", {
-            name: config.prefix + "FunctionApp",
+            name: config.functionAppName ?? config.prefix + "FunctionApp",
             location: config.resourceGroup.location,
             resourceGroupName: config.resourceGroup.name,
             servicePlanId: appServicePlan.id,
@@ -93,13 +94,13 @@ export class AzureFunctionLinuxConstruct extends Construct {
 
         if (config.publishMode !== PublishMode.Manual) {
             const vsProjectPath = config.vsProjectPath;
-            
+
             let build_hash = "${timestamp()}";
-            if(config.publishMode == PublishMode.AfterCodeChange){
-                const textEncoder = new TextEncoder(); 
+            if (config.publishMode == PublishMode.AfterCodeChange) {
+                const textEncoder = new TextEncoder();
                 const textDecoder = new TextDecoder("utf-8");
-                build_hash = textDecoder.decode(sha256.hash(textEncoder.encode(getAllFilesSync(vsProjectPath).toArray().filter(c=>c.endsWith(".cs")).map(f=>sha256File(f)).join())));
-            }          
+                build_hash = textDecoder.decode(sha256.hash(textEncoder.encode(getAllFilesSync(vsProjectPath).toArray().filter(c => c.endsWith(".cs")).map(f => sha256File(f)).join())));
+            }
 
             const buildFunctionAppResource = new Resource(this, "BuildFunctionAppResource",
                 {
