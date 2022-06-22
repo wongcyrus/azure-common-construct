@@ -8,6 +8,7 @@ import { getAllFilesSync } from 'get-all-files'
 import * as sha256File from 'sha256-file';
 import * as sha256 from "fast-sha256";
 import { TextDecoder, TextEncoder } from 'util'
+import { DataExternal } from 'cdktf-azure-providers/.gen/providers/external';
 
 export enum PublishMode {
     Always = 1,
@@ -22,12 +23,15 @@ export interface AzureFunctionLinuxConstructConfig {
     readonly appSettings: { [key: string]: string }
     readonly vsProjectPath: string
     readonly skuName?: string
-    readonly publishMode: PublishMode
+    readonly publishMode: PublishMode,
+    readonly functionNames?: string[]
 }
 
 export class AzureFunctionLinuxConstruct extends Construct {
     public readonly functionApp: LinuxFunctionApp;
     public readonly storageAccount: StorageAccount;
+    public readonly functionKeys?: { [key: string]: string };
+    public readonly functionUrls?: { [key: string]: string };
 
     constructor(
         scope: Construct,
@@ -138,6 +142,26 @@ export class AzureFunctionLinuxConstruct extends Construct {
                     },
                 },
             ]);
+
+            if (config.functionNames) {
+                const psScriptPath = path.join(__dirname, "GetFunctionKey.ps1");
+                this.functionKeys = {};
+                this.functionUrls = {};
+                for (const functionName of config.functionNames) {
+                    const functionKeyExternal = new DataExternal(this, functionName + "FunctionKeyExternal", {
+                        program: ["PowerShell", psScriptPath],
+                        query: {
+                            resourceGroup: config.resourceGroup.name,
+                            functionAppName: this.functionApp.name,
+                            functionName
+                        },
+                        dependsOn: [this.functionApp , publishFunctionAppResource]
+                    })
+                    const functionKey = functionKeyExternal.result.lookup("FunctionKey")
+                    this.functionKeys[functionName] = functionKey
+                    this.functionUrls[functionName] = `https://${this.functionApp.name}.azurewebsites.net/api/${functionName}?code=${functionKey}`
+                }
+            }
         }
     }
 }
