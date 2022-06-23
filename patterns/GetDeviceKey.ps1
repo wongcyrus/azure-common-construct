@@ -5,8 +5,10 @@ $iotHubName = $json.iotHubName
 $deviceId = $json.deviceId
 
 $device = az iot hub device-identity show --device-id $deviceId --hub-name $iotHubName --resource-group $resourceGroup 2>$null | ConvertFrom-Json
-if (!$device) {   
-    ($result = az iot hub device-identity delete --device-id $deviceId --hub-name $iotHubName --resource-group $resourceGroup) 2>$null
+if ($device) { 
+    $device = az iot hub device-identity show --device-id $deviceId --hub-name $iotHubName --resource-group $resourceGroup 2>$null | ConvertFrom-Json
+}
+else {    
     $device = az iot hub device-identity create --device-id $deviceId --hub-name $iotHubName --resource-group $resourceGroup --auth-method "shared_private_key"  | ConvertFrom-Json
 }
 $deviceKey = $device.Authentication.SymmetricKey.PrimaryKey
