@@ -1,7 +1,7 @@
 # azure-common-construct
 
 This package is a Typescript package for some common Azure L3 CDK-TF patterns.
-1. AzureFunctionLinuxConstruct – C# Azure function in Linux with consumption plan and handle publishing application.
+1. AzureFunctionLinuxConstruct and AzureFunctionWindowsConstruct– C# Azure function in Linux with consumption plan and handle publishing application.
 2. AzureIotConstruct - Azure IoTHub and return primary connection string.
 3. AzureIotEventHubConstruct - Child class of AzureIotConstruct, added Event hub sink and return EventHub primary connection string.
 4. AzureIotDeviceConstruct – Using terraform external data provider and Azure CLI to create Azure IoT Device and return device key.

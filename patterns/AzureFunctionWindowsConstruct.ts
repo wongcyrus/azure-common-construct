@@ -1,10 +1,9 @@
 import { StringResource } from 'cdktf-azure-providers/.gen/providers/random'
 import { Construct } from 'constructs'
-import { ResourceGroup, ApplicationInsights, ServicePlan, LinuxFunctionApp, StorageAccount } from "cdktf-azure-providers/.gen/providers/azurerm"
+import { ResourceGroup, ApplicationInsights, ServicePlan, WindowsFunctionApp, StorageAccount } from "cdktf-azure-providers/.gen/providers/azurerm"
 import { PublisherConstruct, PublishMode } from './PublisherConstruct';
 
-
-export interface AzureFunctionLinuxConstructConfig {
+export interface AzureFunctionWindowsConstructConfig {
     readonly functionAppName?: string
     readonly prefix: string
     readonly environment: string
@@ -16,8 +15,8 @@ export interface AzureFunctionLinuxConstructConfig {
     readonly functionNames?: string[]
 }
 
-export class AzureFunctionLinuxConstruct extends Construct {
-    public readonly functionApp: LinuxFunctionApp;
+export class AzureFunctionWindowsConstruct extends Construct {
+    public readonly functionApp: WindowsFunctionApp;
     public readonly storageAccount: StorageAccount;
     public readonly functionKeys?: { [key: string]: string };
     public readonly functionUrls?: { [key: string]: string };
@@ -25,7 +24,7 @@ export class AzureFunctionLinuxConstruct extends Construct {
     constructor(
         scope: Construct,
         name: string,
-        config: AzureFunctionLinuxConstructConfig
+        config: AzureFunctionWindowsConstructConfig
     ) {
         super(scope, name)
 
@@ -41,7 +40,7 @@ export class AzureFunctionLinuxConstruct extends Construct {
             location: config.resourceGroup.location,
             resourceGroupName: config.resourceGroup.name,
             skuName: config.skuName ?? "Y1",
-            osType: "Linux",
+            osType: "Windows",
         })
 
         const suffix = new StringResource(this, "Random", {
@@ -66,7 +65,7 @@ export class AzureFunctionLinuxConstruct extends Construct {
         appSettings['FUNCTIONS_WORKER_RUNTIME'] = "dotnet"
         appSettings['Environment'] = config.environment
 
-        this.functionApp = new LinuxFunctionApp(this, "FunctionApp", {
+        this.functionApp = new WindowsFunctionApp(this, "FunctionApp", {
             name: config.functionAppName ?? config.prefix + "FunctionApp",
             location: config.resourceGroup.location,
             resourceGroupName: config.resourceGroup.name,
@@ -82,7 +81,6 @@ export class AzureFunctionLinuxConstruct extends Construct {
             siteConfig: {
             }
         })
-
         const publisherConstructConstruct = new PublisherConstruct(this,"PublisherConstructConstruct",{
             functionApp: this.functionApp,
             publishMode:config.publishMode,
@@ -91,6 +89,6 @@ export class AzureFunctionLinuxConstruct extends Construct {
             functionNames: config.functionNames
         })
         this.functionKeys = publisherConstructConstruct.functionKeys
-        this.functionUrls = publisherConstructConstruct.functionUrls            
+        this.functionUrls = publisherConstructConstruct.functionUrls      
     }
 }
