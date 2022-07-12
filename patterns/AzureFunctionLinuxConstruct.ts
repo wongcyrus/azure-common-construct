@@ -62,7 +62,7 @@ export class AzureFunctionLinuxConstruct extends Construct {
         appSettings['FUNCTIONS_WORKER_RUNTIME'] = "dotnet"
         appSettings['AzureWebJobsStorage'] = this.storageAccount.primaryConnectionString
         appSettings['APPINSIGHTS_INSTRUMENTATIONKEY'] = applicationInsights.instrumentationKey
-        appSettings['WEBSITE_RUN_FROM_PACKAGE'] = "1"
+        appSettings['WEBSITE_RUN_FROM_PACKAGE'] = "1" 
         appSettings['FUNCTIONS_WORKER_RUNTIME'] = "dotnet"
         appSettings['Environment'] = config.environment
 
@@ -73,7 +73,7 @@ export class AzureFunctionLinuxConstruct extends Construct {
             servicePlanId: appServicePlan.id,
             storageAccountName: this.storageAccount.name,
             storageAccountAccessKey: this.storageAccount.primaryAccessKey,
-
+            functionsExtensionVersion:"~4",
             identity: { type: "SystemAssigned" },
             lifecycle: {
                 ignoreChanges: ["app_settings[\"WEBSITE_RUN_FROM_PACKAGE\"]"]

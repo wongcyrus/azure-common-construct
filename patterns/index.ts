@@ -5,3 +5,4 @@ export * from './AzureIotEventHubConstruct';
 export * from './AzureStaticConstainerConstruct';
 export * from './AzureFunctionWindowsConstruct';
 export * from './PublisherConstruct';
+export * from './AzureFunctionFileSharePublisherConstruct'
