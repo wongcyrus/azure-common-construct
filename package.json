@@ -1,7 +1,7 @@
 {
   "name": "azure-common-construct",
   "author": "Cyrus Wong",
-  "version": "0.0.48",
+  "version": "0.0.49",
   "repository": {
     "url": "https://github.com/wongcyrus/AzureConstructLib",
     "type": "remote"
@@ -32,7 +32,7 @@
   },
   "peerDependencies": {
     "cdktf": "^0.11.2",
-    "constructs": "^10.1.43"
+    "constructs": "^10.1.57"
   },
   "devDependencies": {
     "@types/jest": "^27.5.1",
@@ -41,7 +41,7 @@
     "@types/sha256-file": "^1.0.1",
     "cdktf": "^0.11.2",
     "cdktf-cli": "^0.11.2",
-    "constructs": "^10.1.43",
+    "constructs": "^10.1.57",
     "jest": "^28.1.0",
     "ts-jest": "^28.0.3",
     "ts-node": "^10.8.0",
@@ -72,7 +72,7 @@
     }
   },
   "dependencies": {
-    "cdktf-azure-providers": "^0.0.4",
+    "cdktf-azure-providers": "^0.0.5",
     "fast-sha256": "^1.3.0",
     "get-all-files": "^4.1.0",
     "sha256-file": "^1.0.0"
