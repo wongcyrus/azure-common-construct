@@ -8,6 +8,7 @@ This package is a Typescript package for some common Azure L3 CDK-TF patterns.
 5. AzureStaticConstainerConstruct - Build static Docker image and put it in ACR. Image will rebuild when docker GitHub branch is updated.
 6. PublisherConstruct - Used by AzureFunctionLinuxConstruct and AzureFunctionWindowsConstruct. It runs "dotnet publish -p:PublishProfile=FolderProfile" and "az functionapp deployment source config-zip" based on PublishMode. Extract Function keys and urls when functionNames presents.
 7. AzureFunctionFileSharePublisherConstruct - Upload folder to Azure Function fileshare.
+8. AzureApiManagementConstruct - Azure Function wrapper with API Key and Rate Limit settings.
 
 Some of the functions are using powershell to invoke Azure cli,
 You need to install Azure cli 
