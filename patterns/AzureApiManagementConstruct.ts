@@ -22,6 +22,7 @@ export interface AzureApiManagementConstructConfig {
     readonly apiName: string
     readonly publisherName: string
     readonly publisherEmail: string
+    readonly corsDomain?: string
     readonly keyRateLimit?: number
     readonly ipRateLimit?: number
     readonly prefix: string
@@ -54,9 +55,9 @@ export class AzureApiManagementConstruct extends Construct {
             publisherEmail: config.publisherEmail,
             resourceGroupName: config.resourceGroup.name,
             skuName: config.skuName,
-            
+
         })
-        this.apiManagement = apiManagement;       
+        this.apiManagement = apiManagement;
 
         const apiManagementNamedValue = new ApiManagementNamedValue(this, "ApiManagementNamedValue", {
             name: "func-functionkey",
@@ -122,9 +123,9 @@ export class AzureApiManagementConstruct extends Construct {
             }
         })
 
-        let rateLimitRules ="";
-        if(config.keyRateLimit)
-            rateLimitRules +=`
+        let rateLimitRules = "";
+        if (config.keyRateLimit)
+            rateLimitRules += `
           <set-header name="request-email" exists-action="override">
             <value>@(context.User.Email)</value>
           </set-header>
@@ -133,17 +134,36 @@ export class AzureApiManagementConstruct extends Construct {
           </set-header>
           <rate-limit calls="${config.keyRateLimit}" renewal-period="60" />          
           `
-        if(config.ipRateLimit)
-            rateLimitRules +=`<rate-limit-by-key calls="${config.ipRateLimit}" renewal-period="60" counter-key="@(context.Request.IpAddress)" />`
+        if (config.ipRateLimit)
+            rateLimitRules += `<rate-limit-by-key calls="${config.ipRateLimit}" renewal-period="60" counter-key="@(context.Request.IpAddress)" />`
 
+        const cors = config.corsDomain ? `
+    <cors>
+        <allowed-origins>
+            <origin>${config.corsDomain}</origin>
+        </allowed-origins>
+        <allowed-methods preflight-result-max-age="300">
+            <method>GET</method>
+            <method>POST</method>
+            <method>PATCH</method>
+            <method>DELETE</method>
+        </allowed-methods>
+        <allowed-headers>
+            <header>*</header>            
+        </allowed-headers>
+        <expose-headers>
+            <header>*</header>
+        </expose-headers>
+    </cors>`: "";
         new ApiManagementApiPolicy(this, "ApiManagementApiPolicy", {
             apiName: apiManagementApi.name,
             apiManagementName: apiManagement.name,
             resourceGroupName: config.resourceGroup.name,
             xmlContent: `
       <policies>
-        <inbound>      
-          ${rateLimitRules}
+        <inbound>
+            ${cors} 
+            ${rateLimitRules}
           <base />
           <set-backend-service backend-id="${apiManagementBackend.name}" />
         </inbound>
@@ -172,7 +192,7 @@ export class AzureApiManagementConstruct extends Construct {
                 apiId: apiManagementApi.id,
                 state: "active"
             })
-            let apiUserKey:ApiUserKey = {...apiUser, apiKey:apiManagementSubscription.primaryKey}            
+            let apiUserKey: ApiUserKey = { ...apiUser, apiKey: apiManagementSubscription.primaryKey }
             this.apiUsers.push(apiUserKey)
             i++;
         }
