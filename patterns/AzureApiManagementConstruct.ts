@@ -142,18 +142,15 @@ export class AzureApiManagementConstruct extends Construct {
         <allowed-origins>
             <origin>${config.corsDomain}</origin>
         </allowed-origins>
-        <allowed-methods preflight-result-max-age="300">
-            <method>GET</method>
-            <method>POST</method>
-            <method>PATCH</method>
-            <method>DELETE</method>
-        </allowed-methods>
-        <allowed-headers>
-            <header>*</header>            
-        </allowed-headers>
-        <expose-headers>
-            <header>*</header>
-        </expose-headers>
+        <allowed-methods preflight-result-max-age="300"> 
+            <method>*</method> 
+        </allowed-methods> 
+        <allowed-headers> 
+            <header>*</header> 
+        </allowed-headers> 
+        <expose-headers> 
+            <header>*</header> 
+        </expose-headers> 
     </cors>`: "";
         new ApiManagementApiPolicy(this, "ApiManagementApiPolicy", {
             apiName: apiManagementApi.name,
