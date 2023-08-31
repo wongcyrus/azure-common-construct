@@ -1,6 +1,12 @@
-import { StringResource } from 'cdktf-azure-providers/.gen/providers/random'
+import { StringResource } from 'cdktf-azure-providers/.gen/providers/random/string-resource'
 import { Construct } from 'constructs'
-import { ResourceGroup, ApplicationInsights, ServicePlan, LinuxFunctionApp, StorageAccount } from "cdktf-azure-providers/.gen/providers/azurerm"
+import { StorageAccount } from "cdktf-azure-providers/.gen/providers/azurerm/storage-account"
+import { ApplicationInsights } from "cdktf-azure-providers/.gen/providers/azurerm/application-insights"
+import { ServicePlan } from "cdktf-azure-providers/.gen/providers/azurerm/service-plan"
+import { ResourceGroup } from "cdktf-azure-providers/.gen/providers/azurerm/resource-group";
+import { LinuxFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm/linux-function-app";
+
+
 import { PublisherConstruct, PublishMode } from './PublisherConstruct';
 
 
@@ -62,7 +68,7 @@ export class AzureFunctionLinuxConstruct extends Construct {
         appSettings['FUNCTIONS_WORKER_RUNTIME'] = "dotnet"
         appSettings['AzureWebJobsStorage'] = this.storageAccount.primaryConnectionString
         appSettings['APPINSIGHTS_INSTRUMENTATIONKEY'] = applicationInsights.instrumentationKey
-        appSettings['WEBSITE_RUN_FROM_PACKAGE'] = "1" 
+        appSettings['WEBSITE_RUN_FROM_PACKAGE'] = "1"
         appSettings['FUNCTIONS_WORKER_RUNTIME'] = "dotnet"
         appSettings['Environment'] = config.environment
 
@@ -73,7 +79,7 @@ export class AzureFunctionLinuxConstruct extends Construct {
             servicePlanId: appServicePlan.id,
             storageAccountName: this.storageAccount.name,
             storageAccountAccessKey: this.storageAccount.primaryAccessKey,
-            functionsExtensionVersion:"~4",
+            functionsExtensionVersion: "~4",
             identity: { type: "SystemAssigned" },
             lifecycle: {
                 ignoreChanges: ["app_settings[\"WEBSITE_RUN_FROM_PACKAGE\"]"]
@@ -83,14 +89,14 @@ export class AzureFunctionLinuxConstruct extends Construct {
             }
         })
 
-        const publisherConstructConstruct = new PublisherConstruct(this,"PublisherConstructConstruct",{
+        const publisherConstructConstruct = new PublisherConstruct(this, "PublisherConstructConstruct", {
             functionApp: this.functionApp,
-            publishMode:config.publishMode,
+            publishMode: config.publishMode,
             vsProjectPath: config.vsProjectPath,
-            resourceGroup:config.resourceGroup,
+            resourceGroup: config.resourceGroup,
             functionNames: config.functionNames
         })
         this.functionKeys = publisherConstructConstruct.functionKeys
-        this.functionUrls = publisherConstructConstruct.functionUrls            
+        this.functionUrls = publisherConstructConstruct.functionUrls
     }
 }

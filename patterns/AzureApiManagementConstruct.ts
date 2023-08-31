@@ -1,10 +1,17 @@
 import { Construct } from 'constructs'
-import {
-    ResourceGroup, DataAzurermFunctionAppHostKeys, ApiManagement,
-    ApiManagementNamedValue, ApiManagementApi, ApiManagementApiOperation,
-    ApiManagementBackend, ApiManagementApiPolicy, ApiManagementUser, ApiManagementSubscription,
-    LinuxFunctionApp, WindowsFunctionApp
-} from "cdktf-azure-providers/.gen/providers/azurerm"
+import { ResourceGroup } from "cdktf-azure-providers/.gen/providers/azurerm/resource-group";
+import { ApiManagement } from "cdktf-azure-providers/.gen/providers/azurerm/api-management";
+import { ApiManagementNamedValue } from "cdktf-azure-providers/.gen/providers/azurerm/api-management-named-value";
+import { ApiManagementApi } from "cdktf-azure-providers/.gen/providers/azurerm/api-management-api";
+import { ApiManagementApiOperation } from "cdktf-azure-providers/.gen/providers/azurerm/api-management-api-operation";
+import { LinuxFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm/linux-function-app";
+import { ApiManagementApiPolicy } from "cdktf-azure-providers/.gen/providers/azurerm/api-management-api-policy";
+import { ApiManagementUser } from "cdktf-azure-providers/.gen/providers/azurerm/api-management-user";
+import { ApiManagementSubscription } from "cdktf-azure-providers/.gen/providers/azurerm/api-management-subscription";
+import { WindowsFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm/windows-function-app";
+import { ApiManagementBackend } from "cdktf-azure-providers/.gen/providers/azurerm/api-management-backend";
+import { DataAzurermFunctionAppHostKeys } from "cdktf-azure-providers/.gen/providers/azurerm/data-azurerm-function-app-host-keys";
+
 
 export type ApiUser = {
     id: string

@@ -1,6 +1,7 @@
 import { Construct } from 'constructs'
-import {  Iothub, ResourceGroup, IothubSharedAccessPolicyA } from "cdktf-azure-providers/.gen/providers/azurerm"
-
+import { Iothub } from "cdktf-azure-providers/.gen/providers/azurerm/iothub"
+import { ResourceGroup } from "cdktf-azure-providers/.gen/providers/azurerm/resource-group"
+import { IothubSharedAccessPolicyA } from "cdktf-azure-providers/.gen/providers/azurerm/iothub-shared-access-policy"
 
 export interface AzureIoTConfig {
     readonly prefix: string
@@ -9,7 +10,7 @@ export interface AzureIoTConfig {
 }
 
 export class AzureIotConstruct extends Construct {
-    public readonly iothub: Iothub;  
+    public readonly iothub: Iothub;
     public readonly iothubPrimaryConnectionString: string;
 
     constructor(
@@ -19,7 +20,7 @@ export class AzureIotConstruct extends Construct {
     ) {
         super(scope, name)
 
-        
+
         this.iothub = new Iothub(this, "Iothub", {
             name: config.prefix + "Iothub",
             resourceGroupName: config.resourceGroup.name,
@@ -31,7 +32,7 @@ export class AzureIotConstruct extends Construct {
                 feedback: [{ timeToLive: "PT1H10M", maxDeliveryCount: 15, lockDuration: "PT30S" }]
             },
             tags: { environment: config.environment }
-        })       
+        })
 
         const iothubSharedAccessPolicyA = new IothubSharedAccessPolicyA(this, "IothubSharedAccessPolicyA", {
             name: config.prefix + "IothubSharedAccessPolicy",

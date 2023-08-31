@@ -1,14 +1,16 @@
 
 import { Construct } from 'constructs'
 import *  as path from 'path';
-import { ResourceGroup, WindowsFunctionApp, LinuxFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm"
-import { Resource } from "cdktf-azure-providers/.gen/providers/null"
-import { DataArchiveFile } from "cdktf-azure-providers/.gen/providers/archive"
+import { ResourceGroup } from "cdktf-azure-providers/.gen/providers/azurerm/resource-group"
+import { WindowsFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm/windows-function-app"
+import { LinuxFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm/linux-function-app"
+import { Resource } from "cdktf-azure-providers/.gen/providers/null/resource"
+import { DataArchiveFile } from "cdktf-azure-providers/.gen/providers/archive/data-archive-file"
 import { getAllFilesSync } from 'get-all-files'
 import * as sha256File from 'sha256-file';
 import * as sha256 from "fast-sha256";
 import { TextDecoder, TextEncoder } from 'util'
-import { DataExternal } from 'cdktf-azure-providers/.gen/providers/external';
+import { DataExternal } from 'cdktf-azure-providers/.gen/providers/external/data-external';
 
 export enum PublishMode {
     Always = 1,

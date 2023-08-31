@@ -1,8 +1,9 @@
 import { Construct } from 'constructs'
-import { ResourceGroup, ContainerRegistry, ContainerRegistryTask } from "cdktf-azure-providers/.gen/providers/azurerm"
-import { DataHttp } from "cdktf-azure-providers/.gen/providers/http"
-import { Resource } from "cdktf-azure-providers/.gen/providers/null"
-
+import { ResourceGroup } from "cdktf-azure-providers/.gen/providers/azurerm/resource-group"
+import { ContainerRegistry } from "cdktf-azure-providers/.gen/providers/azurerm/container-registry"
+import {  ContainerRegistryTask } from "cdktf-azure-providers/.gen/providers/azurerm/container-registry-task"
+import { DataHttp } from "cdktf-azure-providers/.gen/providers/http/data-http"
+import { Resource } from "cdktf-azure-providers/.gen/providers/null/resource"
 
 export interface AzureStaticConstainerConfig {
     readonly prefix: string

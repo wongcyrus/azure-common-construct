@@ -1,8 +1,11 @@
 
 import { Construct } from 'constructs'
 import *  as path from 'path';
-import { WindowsFunctionApp, LinuxFunctionApp, StorageAccount } from "cdktf-azure-providers/.gen/providers/azurerm"
-import { Resource } from "cdktf-azure-providers/.gen/providers/null"
+import { StorageAccount } from "cdktf-azure-providers/.gen/providers/azurerm/storage-account"
+import { WindowsFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm/windows-function-app";
+import { LinuxFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm/linux-function-app";
+
+import { Resource } from "cdktf-azure-providers/.gen/providers/null/resource"
 import { getAllFilesSync } from 'get-all-files'
 import * as sha256File from 'sha256-file';
 import * as sha256 from "fast-sha256";

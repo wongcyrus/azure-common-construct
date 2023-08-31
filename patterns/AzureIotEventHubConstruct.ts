@@ -1,6 +1,11 @@
 import { Construct } from 'constructs'
-import { Eventhub, EventhubNamespace, EventhubAuthorizationRule, IothubEndpointEventhub, IothubRouteA, IothubEnrichmentA } from "cdktf-azure-providers/.gen/providers/azurerm"
-import { StringResource } from 'cdktf-azure-providers/.gen/providers/random'
+import { Eventhub } from "cdktf-azure-providers/.gen/providers/azurerm/eventhub"
+import { EventhubNamespace } from "cdktf-azure-providers/.gen/providers/azurerm/eventhub-namespace"
+import { EventhubAuthorizationRule } from "cdktf-azure-providers/.gen/providers/azurerm/eventhub-authorization-rule"
+import { IothubEndpointEventhub } from "cdktf-azure-providers/.gen/providers/azurerm/iothub-endpoint-eventhub"
+import { IothubRouteA } from "cdktf-azure-providers/.gen/providers/azurerm/iothub-route"
+import { IothubEnrichmentA } from "cdktf-azure-providers/.gen/providers/azurerm/iothub-enrichment"
+import { StringResource } from 'cdktf-azure-providers/.gen/providers/random/string-resource'
 import { AzureIoTConfig, AzureIotConstruct } from './AzureIotConstruct'
 
 export interface AzureEventHubIoTConfig extends AzureIoTConfig {
@@ -47,7 +52,7 @@ export class AzureIotEventHubConstruct extends AzureIotConstruct {
         })
 
         this.eventhubPrimaryConnectionString = azureFunctionEventhubAuthorizationRule.primaryConnectionString
-        
+
 
         const iothubEndpointEventhub = new IothubEndpointEventhub(this, "IothubEndpointEventhub", {
             resourceGroupName: config.resourceGroup.name,
