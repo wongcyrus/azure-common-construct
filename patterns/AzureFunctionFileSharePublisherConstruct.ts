@@ -42,8 +42,8 @@ export class AzureFunctionFileSharePublisherConstruct extends Construct {
 
         uploadFolderResource.addOverride("provisioner", [
             {
-                "local-exec": {
-                    command: `powershell -ExecutionPolicy ByPass -File ${script} -connectionString \"${Fn.nonsensitive(config.storageAccount.primaryConnectionString)} -localFolder ${config.localFolder} -functionFolder ${config.functionFolder}`
+                "local-exec": {                
+                    command: `${script}-connectionString \"${Fn.nonsensitive(config.storageAccount.primaryConnectionString)}\" -localFolder ${config.localFolder} -functionFolder ${config.functionFolder}`
                 }
             },
         ]);
