@@ -38,12 +38,12 @@ export class AzureFunctionFileSharePublisherConstruct extends Construct {
                 triggers: { build_hash: build_hash },
                 dependsOn: [config.functionApp]
             })
-        const script = path.join(__dirname, "UploadFolderToFileShare.ps1");
+        const script = path.join(__dirname, "UploadFolderToFileShare.sh");
 
         uploadFolderResource.addOverride("provisioner", [
             {
                 "local-exec": {                
-                    command: `${script}-connectionString \"${Fn.nonsensitive(config.storageAccount.primaryConnectionString)}\" -localFolder ${config.localFolder} -functionFolder ${config.functionFolder}`
+                    command: `${script} \"${Fn.nonsensitive(config.storageAccount.primaryConnectionString)}\" \"${config.localFolder}\" \"${config.functionFolder}\"`
                 }
             },
         ]);
