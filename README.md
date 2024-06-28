@@ -15,6 +15,13 @@ You need to install Azure cli
 1. Login AZ cli, but you should always complete this for Terraform.
 2. set ```az config set extension.use_dynamic_install=yes_without_prompt```.
 
+
+Install CDKTF and login npm
+```
+npm install --global cdktf-cli@latest
+npm adduser
+```
+
 To publish new version,
 ```
 npm run build

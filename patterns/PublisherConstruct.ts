@@ -83,12 +83,12 @@ export class PublisherConstruct extends Construct {
             ]);
 
             if (config.functionNames) {
-                const psScriptPath = path.join(__dirname, "GetFunctionKey.ps1");
+                const psScriptPath = path.join(__dirname, "GetFunctionKey.sh");
                 this.functionKeys = {};
                 this.functionUrls = {};
                 for (const functionName of config.functionNames) {
                     const functionKeyExternal = new DataExternal(this, functionName + "FunctionKeyExternal", {
-                        program: ["PowerShell", psScriptPath],
+                        program: ["bash", psScriptPath],
                         query: {
                             resourceGroup: config.resourceGroup.name,
                             functionAppName: config.functionApp.name,

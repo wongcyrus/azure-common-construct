@@ -82,6 +82,11 @@ export class AzureFunctionWindowsConstruct extends Construct {
             },
             appSettings: appSettings,
             siteConfig: {
+                applicationStack: {
+                    dotnetVersion: "v8.0",
+                    useDotnetIsolatedRuntime: false
+                },
+                use32BitWorker: false,
             }
         })
         const publisherConstructConstruct = new PublisherConstruct(this, "PublisherConstructConstruct", {
