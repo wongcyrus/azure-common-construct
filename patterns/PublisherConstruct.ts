@@ -59,7 +59,7 @@ export class PublisherConstruct extends Construct {
                     },
                 },
             ]);
-            const publishPath = path.join(vsProjectPath, "/bin/Release/net6.0/publish");
+            const publishPath = path.join(vsProjectPath, "/bin/Release/publish/azfunction");
             const outputZip = path.join(publishPath, "../deployment.zip")
             const dataArchiveFile = new DataArchiveFile(this, "DataArchiveFile", {
                 type: "zip",
