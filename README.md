@@ -33,6 +33,7 @@ You need to install Azure cli
 Install CDKTF and login npm
 ```
 npm install --global cdktf-cli@latest
+npm i
 npm adduser
 ```
 
