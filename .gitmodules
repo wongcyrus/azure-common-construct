@@ -1,0 +1,3 @@
+[submodule "cdktf-azure-providers"]
+	path = cdktf-azure-providers
+	url = https://github.com/wongcyrus/cdktf-azure-providers
