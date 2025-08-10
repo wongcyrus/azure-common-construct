@@ -45,7 +45,7 @@ if command -v azcopy >/dev/null 2>&1; then
   expiry=$(date -u -d "+2 hours" "+%Y-%m-%dT%H:%MZ" 2>/dev/null || date -u -v+2H "+%Y-%m-%dT%H:%MZ")
   sas=$(az storage share generate-sas \
     --name "$share" \
-    --permissions rlwdacup \
+    --permissions rwdlc \
     --expiry "$expiry" \
     --connection-string "$connectionString" \
     -o tsv)
@@ -58,10 +58,9 @@ if command -v azcopy >/dev/null 2>&1; then
   echo "Using azcopy to upload recursively from $localFolder to $destUrl"
 
   # Optional: allow tuning concurrency via env, default is azcopy's internal heuristic
-  azcopy copy "$localFolder" "$destUrl" \
+  azcopy copy "$localFolder/*" "$destUrl" \
     --recursive \
-    --overwrite=IfSourceNewer \
-    --from-to=LocalFileFS 1>&2
+    --overwrite=IfSourceNewer 1>&2
 else
   echo "azcopy not found, falling back to 'az storage file upload-batch'" >&2
   az storage file upload-batch \
