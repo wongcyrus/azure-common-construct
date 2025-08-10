@@ -24,6 +24,7 @@ export class AzureFunctionWindowsConstruct extends Construct {
     public readonly storageAccount: StorageAccount;
     public readonly functionKeys?: { [key: string]: string };
     public readonly functionUrls?: { [key: string]: string };
+    public readonly publisher?: PublisherConstruct;
 
     constructor(
         scope: Construct,
@@ -94,14 +95,15 @@ export class AzureFunctionWindowsConstruct extends Construct {
                 use32BitWorker: false,
             }
         })
-        const publisherConstructConstruct = new PublisherConstruct(this, "PublisherConstructConstruct", {
+    const publisherConstructConstruct = new PublisherConstruct(this, "PublisherConstructConstruct", {
             functionApp: this.functionApp,
             publishMode: config.publishMode,
             vsProjectPath: config.vsProjectPath,
             resourceGroup: config.resourceGroup,
             functionNames: config.functionNames
         })
-        this.functionKeys = publisherConstructConstruct.functionKeys
-        this.functionUrls = publisherConstructConstruct.functionUrls
+    this.functionKeys = publisherConstructConstruct.functionKeys
+    this.functionUrls = publisherConstructConstruct.functionUrls
+    this.publisher = publisherConstructConstruct
     }
 }

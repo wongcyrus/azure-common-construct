@@ -28,6 +28,8 @@ export interface PublisherConstructConfig {
 export class PublisherConstruct extends Construct {
     public readonly functionKeys?: { [key: string]: string };
     public readonly functionUrls?: { [key: string]: string };
+    public readonly buildResource?: Resource;
+    public readonly publishResource?: Resource;
     constructor(
         scope: Construct,
         name: string,
@@ -101,6 +103,10 @@ export class PublisherConstruct extends Construct {
                     this.functionUrls[functionName] = `https://${config.functionApp.name}.azurewebsites.net/api/${functionName}?code=${functionKey}`
                 }
             }
+
+            // expose for external dependency chaining
+            this.buildResource = buildFunctionAppResource;
+            this.publishResource = publishFunctionAppResource;
         }
 
     }
