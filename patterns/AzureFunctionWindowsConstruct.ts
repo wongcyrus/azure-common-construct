@@ -36,7 +36,12 @@ export class AzureFunctionWindowsConstruct extends Construct {
             name: config.prefix + "ApplicationInsights",
             location: config.resourceGroup.location,
             resourceGroupName: config.resourceGroup.name,
-            applicationType: "other"
+            applicationType: "other",
+            lifecycle: {
+                // Prevent failures when an existing Application Insights switches between workspace-based and classic.
+                // If a workspace was previously set, do not attempt to remove it.
+                ignoreChanges: ["workspace_id"]
+            }
         })
 
         const appServicePlan = new ServicePlan(this, "AppServicePlan", {
