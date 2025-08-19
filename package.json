@@ -1,7 +1,7 @@
 {
   "name": "azure-common-construct",
   "author": "Cyrus Wong",
-  "version": "0.0.76",
+  "version": "0.0.77",
   "repository": {
     "url": "https://github.com/wongcyrus/AzureConstructLib",
     "type": "remote"
@@ -33,7 +33,7 @@
   "peerDependencies": {
     "cdktf": "^0.21.0",
     "constructs": "^10.4.2",
-    "cdktf-azure-providers": "0.0.14"
+    "cdktf-azure-providers": "0.0.16"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
