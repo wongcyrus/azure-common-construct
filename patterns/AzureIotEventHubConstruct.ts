@@ -35,9 +35,8 @@ export class AzureIotEventHubConstruct extends AzureIotConstruct {
 
         this.eventhub = new Eventhub(this, "Eventhub", {
             name: config.prefix + "Eventhub",
-            resourceGroupName: config.resourceGroup.name,
             messageRetention: 1,
-            namespaceName: eventhubNamespace.name,
+            namespaceId: eventhubNamespace.id,
             partitionCount: 1
         })
 
