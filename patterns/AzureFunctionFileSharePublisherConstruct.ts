@@ -10,7 +10,7 @@ import { getAllFilesSync } from 'get-all-files'
 import * as sha256File from 'sha256-file';
 import * as sha256 from "fast-sha256";
 import { TextDecoder, TextEncoder } from 'util'
-import { Fn } from 'cdktf';
+import { Fn } from 'cdktn';
 
 export interface AzureFunctionFileSharePublisherConstructConfig {
     readonly functionApp: WindowsFunctionApp | LinuxFunctionApp;

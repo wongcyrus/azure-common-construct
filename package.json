@@ -1,78 +1,53 @@
 {
   "name": "azure-common-construct",
   "author": "Cyrus Wong",
-  "version": "0.0.77",
+  "version": "0.1.0",
+  "description": "Reusable Azure infrastructure patterns for CDK Terrain",
   "repository": {
-    "url": "https://github.com/wongcyrus/AzureConstructLib",
-    "type": "remote"
+    "url": "https://github.com/wongcyrus/azure-common-construct",
+    "type": "git"
   },
   "main": "patterns/index.js",
-  "types": "patterns/index.ts",
+  "types": "patterns/index.d.ts",
+  "files": [
+    "patterns/**/*.js",
+    "patterns/**/*.d.ts",
+    "patterns/*.ps1",
+    "patterns/*.sh",
+    "README.md"
+  ],
   "license": "MPL-2.0",
   "keywords": [
-    "cdk-tf",
+    "cdktn",
+    "cdk-terrain",
+    "opentofu",
+    "terraform",
     "azure"
   ],
   "scripts": {
-    "get": "cdktf get",
     "build": "tsc",
-    "synth": "cdktf synth",
     "compile": "tsc --pretty",
     "watch": "tsc -w",
-    "test": "tsc && jest",
-    "test:watch": "jest --watch",
-    "upgrade": "npm i cdktf@latest cdktf-cli@latest",
-    "upgrade:next": "npm i cdktf@next cdktf-cli@next",
-    "build-jsii": "jsii",
-    "build-jsii:watch": "jsii -w",
-    "package-jsii": "jsii-pacmak"
+    "test": "npm run build",
+    "upgrade": "npm install cdktn@latest"
   },
   "engines": {
-    "node": ">=14.0"
+    "node": ">=22.19.0"
   },
   "peerDependencies": {
-    "cdktf": "^0.21.0",
-    "constructs": "^10.4.2",
-    "cdktf-azure-providers": "0.0.16"
+    "cdktn": "^0.24.0",
+    "constructs": ">=10.6.0 <10.8.0",
+    "cdktf-azure-providers": "^0.1.0"
   },
   "devDependencies": {
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.2.1",
+    "@types/node": "^24.3.0",
     "@types/prettier": "3.0.0",
     "@types/sha256-file": "^1.0.3",
-    "cdktf": "^0.21.0",
-    "cdktf-cli": "^0.21.0",
-    "constructs": "^10.4.2",
-    "jest": "^30.0.5",
-    "ts-jest": "^29.4.1",
-    "ts-node": "^10.9.2",
+    "cdktn": "^0.24.0",
+    "constructs": "^10.6.0",
     "typescript": "^5.9.2"
   },
-  "jsii": {
-    "excludeTypescript": [
-      "*.d.ts",
-      "cdktf.out"
-    ],
-    "outdir": "dist",
-    "targets": {
-      "python": {
-        "distName": "azure-common-construct",
-        "module": "azure-common-construct.base"
-      },
-      "java": {
-        "package": "com.cloudlabhk.azurecommoncontruct",
-        "maven": {
-          "groupId": "com.cloudlabhk.azurecommoncontruct",
-          "artifactId": "azure-common-construct"
-        }
-      },
-      "dotnet": {
-        "namespace": "AzureCommonConstruct.Jsii",
-        "packageId": "AzureCommonConstruct.Jsii"
-      }
-    }
-  },
-  "dependencies": {   
+  "dependencies": {
     "fast-sha256": "^1.3.0",
     "get-all-files": "^5.0.0",
     "sha256-file": "^1.0.0"

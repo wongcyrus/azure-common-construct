@@ -1,6 +1,6 @@
 # azure-common-construct
 
-This package is a Typescript package for some common Azure L3 CDK-TF patterns.
+This TypeScript package provides reusable Azure L3 patterns for CDK Terrain.
 1. AzureFunctionLinuxConstruct and AzureFunctionWindowsConstruct – C# Azure function in Linux with consumption plan and handle publishing application.
 2. AzureIotConstruct - Azure IoTHub and return primary connection string.
 3. AzureIotEventHubConstruct - Child class of AzureIotConstruct, added Event hub sink and return EventHub primary connection string.
@@ -30,17 +30,26 @@ You need to install Azure cli
 2. set ```az config set extension.use_dynamic_install=yes_without_prompt```.
 
 
-Install CDKTF and login npm
+## Requirements
+
+- Node.js 22.19 or newer
+- `cdktn` 0.24
+- `constructs` 10.6
+- `cdktf-azure-providers` 0.1 or newer. Despite its historical package name,
+  version 0.1 and later are generated with CDK Terrain and do not use CDKTF.
+
+## Development
+
 ```
-npm install --global cdktf-cli@latest
-npm i
-npm adduser
+npm install
+npm test
 ```
 
-To publish new version,
+To publish a new version:
+
 ```
-npm run build
+npm test
+npm pack --dry-run
 npm publish
 ```
-
 
