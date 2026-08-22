@@ -70,6 +70,7 @@ export class AzureFunctionWindowsConstruct extends Construct {
         const appSettings = { ...config.appSettings };
         appSettings['FUNCTIONS_WORKER_RUNTIME'] = config.appSettings["FUNCTIONS_WORKER_RUNTIME"] ?? "dotnet-isolated";
         appSettings['AzureWebJobsStorage'] = this.storageAccount.primaryConnectionString
+        appSettings['APPLICATIONINSIGHTS_CONNECTION_STRING'] = applicationInsights.connectionString
         appSettings['APPINSIGHTS_INSTRUMENTATIONKEY'] = applicationInsights.instrumentationKey
         appSettings['WEBSITE_RUN_FROM_PACKAGE'] = "1"
         appSettings['Environment'] = config.environment
@@ -88,9 +89,15 @@ export class AzureFunctionWindowsConstruct extends Construct {
             },
             appSettings: appSettings,
             siteConfig: {
+                applicationInsightsConnectionString: applicationInsights.connectionString,
+                applicationInsightsKey: applicationInsights.instrumentationKey,
                 applicationStack: {
                     dotnetVersion: "v8.0",
-                    useDotnetIsolatedRuntime: false
+                    useDotnetIsolatedRuntime: true
+                },
+                appServiceLogs: {
+                    diskQuotaMb: 100,
+                    retentionPeriodDays: 3
                 },
                 use32BitWorker: false,
             }

@@ -6,11 +6,11 @@ import { WindowsFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm
 import { LinuxFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm/linux-function-app";
 
 import { Resource } from "cdktf-azure-providers/.gen/providers/null/resource"
-import { getAllFilesSync } from 'get-all-files'
-import * as sha256File from 'sha256-file';
+import sha256File = require('sha256-file');
 import * as sha256 from "fast-sha256";
 import { TextDecoder, TextEncoder } from 'util'
 import { Fn } from 'cdktn';
+import { getAllFilePathsSync } from './FileSystemHelper';
 
 export interface AzureFunctionFileSharePublisherConstructConfig {
     readonly functionApp: WindowsFunctionApp | LinuxFunctionApp;
@@ -31,7 +31,7 @@ export class AzureFunctionFileSharePublisherConstruct extends Construct {
 
         const textEncoder = new TextEncoder();
         const textDecoder = new TextDecoder("utf-8");
-        build_hash = textDecoder.decode(sha256.hash(textEncoder.encode(getAllFilesSync(config.localFolder).toArray().map(f => sha256File(f)).join())));
+        build_hash = textDecoder.decode(sha256.hash(textEncoder.encode(getAllFilePathsSync(config.localFolder).map(f => sha256File(f)).join())));
 
         const uploadFolderResource = new Resource(this, "UploadFolderResource",
             {

@@ -6,11 +6,11 @@ import { WindowsFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm
 import { LinuxFunctionApp } from "cdktf-azure-providers/.gen/providers/azurerm/linux-function-app"
 import { Resource } from "cdktf-azure-providers/.gen/providers/null/resource"
 import { DataArchiveFile } from "cdktf-azure-providers/.gen/providers/archive/data-archive-file"
-import { getAllFilesSync } from 'get-all-files'
-import * as sha256File from 'sha256-file';
+import sha256File = require('sha256-file');
 import * as sha256 from "fast-sha256";
 import { TextDecoder, TextEncoder } from 'util'
 import { DataExternal } from 'cdktf-azure-providers/.gen/providers/external/data-external';
+import { getAllFilePathsSync } from './FileSystemHelper';
 
 export enum PublishMode {
     Always = 1,
@@ -44,7 +44,7 @@ export class PublisherConstruct extends Construct {
             if (config.publishMode == PublishMode.AfterCodeChange) {
                 const textEncoder = new TextEncoder();
                 const textDecoder = new TextDecoder("utf-8");
-                build_hash = textDecoder.decode(sha256.hash(textEncoder.encode(getAllFilesSync(vsProjectPath).toArray().filter(c => c.endsWith(".cs")).map(f => sha256File(f)).join())));
+                build_hash = textDecoder.decode(sha256.hash(textEncoder.encode(getAllFilePathsSync(vsProjectPath).filter(c => c.endsWith(".cs")).map(f => sha256File(f)).join())));
             }
 
             const buildFunctionAppResource = new Resource(this, "BuildFunctionAppResource",
