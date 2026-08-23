@@ -9,6 +9,10 @@ import { PublisherConstruct, PublishMode } from './PublisherConstruct';
 
 export interface AzureFunctionWindowsConstructConfig {
     readonly functionAppName?: string
+    readonly storageAccountName?: string
+    readonly servicePlanName?: string
+    readonly applicationInsightsName?: string
+    readonly applicationInsightsWorkspaceId?: string
     readonly prefix: string
     readonly environment: string
     readonly resourceGroup: ResourceGroup
@@ -34,33 +38,30 @@ export class AzureFunctionWindowsConstruct extends Construct {
         super(scope, name)
 
         const applicationInsights = new ApplicationInsights(this, "ApplicationInsights", {
-            name: config.prefix + "ApplicationInsights",
+            name: config.applicationInsightsName ?? config.prefix + "ApplicationInsights",
             location: config.resourceGroup.location,
             resourceGroupName: config.resourceGroup.name,
             applicationType: "other",
-            lifecycle: {
-                // Prevent failures when an existing Application Insights switches between workspace-based and classic.
-                // If a workspace was previously set, do not attempt to remove it.
-                ignoreChanges: ["workspace_id"]
-            }
+            workspaceId: config.applicationInsightsWorkspaceId,
         })
 
         const appServicePlan = new ServicePlan(this, "AppServicePlan", {
-            name: config.prefix + "AppServicePlan",
+            name: config.servicePlanName ?? config.prefix + "AppServicePlan",
             location: config.resourceGroup.location,
             resourceGroupName: config.resourceGroup.name,
             skuName: config.skuName ?? "Y1",
             osType: "Windows",
         })
 
-        const suffix = new StringResource(this, "Random", {
-            length: 5,
-            special: false,
-            lower: true,
-            upper: false,
-        })
+        const storageAccountName = config.storageAccountName ??
+            new StringResource(this, "Random", {
+                length: 5,
+                special: false,
+                lower: true,
+                upper: false,
+            }).result
         this.storageAccount = new StorageAccount(this, "StorageAccount", {
-            name: suffix.result,
+            name: storageAccountName,
             location: config.resourceGroup.location,
             resourceGroupName: config.resourceGroup.name,
             accountTier: "Standard",
