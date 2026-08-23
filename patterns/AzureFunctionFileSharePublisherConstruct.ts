@@ -16,7 +16,9 @@ export interface AzureFunctionFileSharePublisherConstructConfig {
     readonly functionApp: WindowsFunctionApp | LinuxFunctionApp;
     readonly localFolder: string;
     readonly functionFolder: string;
-    readonly storageAccount: StorageAccount;   
+    readonly storageAccount: StorageAccount;
+    readonly alwaysUpload?: boolean;
+    readonly dependencies?: Resource[];
 }
 
 export class AzureFunctionFileSharePublisherConstruct extends Construct {
@@ -28,15 +30,16 @@ export class AzureFunctionFileSharePublisherConstruct extends Construct {
         super(scope, name)
 
         let build_hash = "${timestamp()}";
-
-        const textEncoder = new TextEncoder();
-        const textDecoder = new TextDecoder("utf-8");
-        build_hash = textDecoder.decode(sha256.hash(textEncoder.encode(getAllFilePathsSync(config.localFolder).map(f => sha256File(f)).join())));
+        if (!config.alwaysUpload) {
+            const textEncoder = new TextEncoder();
+            const textDecoder = new TextDecoder("utf-8");
+            build_hash = textDecoder.decode(sha256.hash(textEncoder.encode(getAllFilePathsSync(config.localFolder).map(f => sha256File(f)).join())));
+        }
 
         const uploadFolderResource = new Resource(this, "UploadFolderResource",
             {
                 triggers: { build_hash: build_hash },
-                dependsOn: [config.functionApp]
+                dependsOn: [config.functionApp, ...(config.dependencies ?? [])]
             })
         const script = path.join(__dirname, "UploadFolderToFileShare.sh");
 
