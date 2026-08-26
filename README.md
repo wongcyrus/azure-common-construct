@@ -1,11 +1,15 @@
 # azure-common-construct
 
 This TypeScript package provides reusable Azure L3 patterns for CDK Terrain.
-1. AzureFunctionLinuxConstruct and AzureFunctionWindowsConstruct – C# Azure function in Linux with consumption plan and handle publishing application.
+
+1. AzureFunctionLinuxConstruct and AzureFunctionWindowsConstruct - provision
+   C# Azure Functions on the matching operating system and publish the
+   application.
 2. AzureIotConstruct - Azure IoTHub and return primary connection string.
 3. AzureIotEventHubConstruct - Child class of AzureIotConstruct, added Event hub sink and return EventHub primary connection string.
 4. AzureIotDeviceConstruct – Using terraform external data provider and Azure CLI to create Azure IoT Device and return device key.
-5. AzureStaticConstainerConstruct - Build static Docker image and put it in ACR. Image will rebuild when docker GitHub branch is updated.
+5. AzureStaticConstainerConstruct (historical spelling) - Build a static Docker
+   image and publish it to Azure Container Registry.
 6. PublisherConstruct - Used by AzureFunctionLinuxConstruct and AzureFunctionWindowsConstruct. It runs "dotnet publish -p:PublishProfile=FolderProfile" and "az functionapp deployment source config-zip" based on PublishMode. Extract Function keys and urls when functionNames presents.
 You have to create /Properties/PublishProfiles/FolderProfile.pubxml with the same PublishDir.
 ```
@@ -24,15 +28,18 @@ You have to create /Properties/PublishProfiles/FolderProfile.pubxml with the sam
 7. AzureFunctionFileSharePublisherConstruct - Upload folder to Azure Function fileshare.
 8. AzureApiManagementConstruct - Azure Function wrapper with API Key and Rate Limit settings.
 
-Some of the functions are using powershell to invoke Azure cli,
-You need to install Azure cli 
-1. Login AZ cli, but you should always complete this for Terraform.
-2. set ```az config set extension.use_dynamic_install=yes_without_prompt```.
+Some constructs invoke Azure CLI from PowerShell or shell provisioners. Install
+Azure CLI, sign in before deployment, and enable non-interactive extension
+installation when the environment requires it:
+
+```bash
+az config set extension.use_dynamic_install=yes_without_prompt
+```
 
 
 ## Requirements
 
-- Node.js 22.19 or newer
+- Node.js 24.19 or newer
 - `cdktn` 0.24
 - `constructs` 10.6
 - `cdktf-azure-providers` 0.1 or newer. Despite its historical package name,
@@ -52,4 +59,3 @@ npm test
 npm pack --dry-run
 npm publish
 ```
-
